@@ -48,14 +48,6 @@ class MessageController extends Controller
             throw new ValidationException($validator);
         }
 
-        // $request->validate([
-        //     'content' => 'required',
-        //     'phone_number' => 'required|digits:10',
-        //     'files.*' => 'mimes:jpg,png,jpeg,pdf|max:5000'
-        // ],
-        // [
-        //     'files.*.mimes'=>'The file must be jpg, png, pdf'
-        // ]);
         
         $message = new Message();
         $message->user_id = 1;
@@ -86,7 +78,9 @@ class MessageController extends Controller
             $validator->errors()->add('sms','Text SMS failed.');
             throw new ValidationException($validator);
         }
-        return redirect()->route('main')->with('success','Message delivered successfully');
+        return redirect()->route("message.delivered")
+            ->with('success','Message delivered successfully')
+            ->with('msg-secret',$message->secret);
     }
 
 
@@ -100,6 +94,23 @@ class MessageController extends Controller
         ]);
     }
 
+    /**
+     * 
+     */
+    function content(Request $request, $secret){
+        $message = Message::with('files')->where('secret',$secret)->first();
+        return inertia('Message/Content', [
+            'message' => $message,
+        ]);
+    }
+
+    /**
+     * 
+     */
+    function delivered(Request $request){
+        // $message = Message::with('files')->where('secret',$secret)->first();
+        return inertia('Message/Delivered');
+    }
 
     /**
      * 

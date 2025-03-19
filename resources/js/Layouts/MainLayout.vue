@@ -13,12 +13,12 @@
                         <div class="text-sm text-gray-500">{{ user.name }}</div>
                         <Link :href="route('message.create')" class="btn-primary">+ Send Message</Link>
                         <div>
-                            <Link :href="route('logout')" method="delete" as="button">Logout</Link>
+                            <Link :href="route('logout')" method="delete" as="button" class="text-md text-blue-500 hover:underline hover:text-blue-700">Logout</Link>
                         </div>
                     </div>
                     <div v-else class="flex items-center gap-2">
-                        <Link :href="route('user-account.create')">Register</Link>
-                        <Link :href="route('login')">Sign-In</Link>
+                        <Link :href="route('user-account.create')" class="text-md text-blue-500 hover:underline hover:text-blue-700">Register</Link>
+                        <Link :href="route('login')" class="text-md text-blue-500 hover:underline hover:text-blue-700">Sign-In</Link>
                     </div>
                 </nav>
             </div>

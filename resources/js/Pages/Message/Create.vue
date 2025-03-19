@@ -38,9 +38,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 import {ref, computed} from 'vue'
-import MainLayout from '@/Layouts/MainLayout.vue'
-
-
 
 const form = useForm({
     content:'default content',

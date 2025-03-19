@@ -21,7 +21,10 @@ Route::get('/', [IndexController::class, 'index'])->name('main');
 // Authenticated users
 Route::get('/message/create',[MessageController::class, 'create'])->name('message.create')->middleware('auth');
 Route::post('/message',[MessageController::class, 'store'])->name('message.store')->middleware('auth');
-Route::get('/message/complete',[MessageController::class, 'complete'])->name('message.complete')->middleware('auth');
+// Route::get('/message/complete',[MessageController::class, 'complete'])->name('message.complete')->middleware('auth');
+
+Route::get('/message/delivered',[MessageController::class, 'delivered'])->name('message.delivered')->middleware('auth');
+Route::get('/message-content/{secret}',[MessageController::class, 'content'])->name('message.show')->middleware('auth');
 
 
 // These are for public users

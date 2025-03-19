@@ -25,7 +25,6 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        // Auth::attempt keeps the user logged in indefinitely if 2nd param true
         if (!Auth::attempt($request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
