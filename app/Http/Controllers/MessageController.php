@@ -60,16 +60,20 @@ class MessageController extends Controller
         //UPLOAD AND SAVE FILES
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $path = $file->store('files', 'private');
                 $newFile = new File();
                 $newFile->message_id = $message->id;
-                $secret = strtotime('now') . Str::random(10);
-                $newFile->secret = md5($secret);
-                $newFile->extension = $file->extension();
                 $newFile->expires_at = strtotime('+20 minutes');
-                $newFile->path = $path;
-                $newFile->filename = $file->getClientOriginalName();
+                $newFile->path = 'files';
                 $newFile->mime = $file->getClientMimeType();
+                switch($file->getClientMimeType()){
+                    case 'image/png': $newFile->extension = "png"; break;
+                    case 'image/jpeg': $newFile->extension = "jpg"; break;
+                    case 'application/pdf': $newFile->extension = "pdf"; break;
+                }
+                $newFile->extension = $file->extension();
+                $newFile->filename = $newFile->secret = md5(strtotime('now') . Str::random(10));
+                $saveAs = "{$newFile->filename}.{$newFile->extension}";
+                $file->storeAs('files', $saveAs, 'private');
                 $newFile->save();
             }
         }
@@ -108,7 +112,6 @@ class MessageController extends Controller
      * 
      */
     function delivered(Request $request){
-        // $message = Message::with('files')->where('secret',$secret)->first();
         return inertia('Message/Delivered');
     }
 

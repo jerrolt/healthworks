@@ -20,14 +20,11 @@ class FileController extends Controller
                 'secret'=>$secret
             ]);
         }
-        
-        $filepath = storage_path('app/private').'/'.$file->path;
-        $visualFilename = $file->filename;
-        return response()->streamDownload(function() use($filepath){
-            readfile($filepath);
-        }, $visualFilename);
-        
-        // $filePath = storage_path('app/private').'/'.$file->path;
-        // return Storage::download($filePath);
+         
+        $location = storage_path('app/private') . '/files/' . $file->filename . '.' . $file->extension;
+        $filename = $file->filename . '.' . $file->extension;
+        return response()->streamDownload(function() use($location){
+            readfile($location);
+        }, $filename);
     }
 }
