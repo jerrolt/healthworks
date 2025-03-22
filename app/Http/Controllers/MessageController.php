@@ -70,7 +70,7 @@ class MessageController extends Controller
                     case 'image/jpeg': $newFile->extension = "jpg"; break;
                     case 'application/pdf': $newFile->extension = "pdf"; break;
                 }
-                $newFile->extension = $file->extension();
+
                 $newFile->filename = $newFile->secret = md5(strtotime('now') . Str::random(10));
                 $saveAs = "{$newFile->filename}.{$newFile->extension}";
                 $file->storeAs('files', $saveAs, 'private');
