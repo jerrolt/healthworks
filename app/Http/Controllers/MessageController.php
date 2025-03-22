@@ -50,7 +50,7 @@ class MessageController extends Controller
 
         
         $message = new Message();
-        $message->user_id = 1;
+        $message->user_id = Auth::user()->id;
         $secret = strtotime('now') . Str::random(10);
         $message->secret = md5($secret);
         $message->phone_number = $request->phone_number;
